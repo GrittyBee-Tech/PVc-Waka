@@ -1,3 +1,5 @@
+import Connect from "@/components/landing-page/connect";
+import Faq from "@/components/landing-page/faq";
 import LandingPage from "@/components/landing-page/home";
 import Objective from "@/components/landing-page/objective";
 import Navbar from "@/components/navbar/navbar";
@@ -9,6 +11,8 @@ export default function Home() {
       <Navbar />
       <LandingPage />
       <Objective />
+      <Connect />
+      <Faq />
     </div>
   );
 }
