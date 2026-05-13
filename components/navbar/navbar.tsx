@@ -1,10 +1,27 @@
 import React from "react";
+import { GiVote } from "react-icons/gi";
 
 const Navbar = () => {
   return (
-    <nav>
-      <p>about</p>
-      <p>contact</p>
+    <nav className="grid grid-flow-col justify-between items-center p-6">
+      <div className=" grid grid-flow-col  gap-2 text-2xl text-[#7ec992] font-bold">
+        <h1>PVC WAKA</h1>
+        <GiVote />
+      </div>
+
+      <div className="">
+        <a href="#about" className="hover:underline text-[#7ec992] ">
+          About
+        </a>
+        <a href="#contact" className="hover:underline text-[#7ec992] ">
+          Contact
+        </a>
+        <div className="inline-flex gap-4 ml-4">
+          <button className="hover:underline text-[#7ec992]">Login</button>
+          <button className="hover:underline text-[#7ec992]">Register</button>
+        </div>
+      </div>
+      <hr />
     </nav>
   );
 };
