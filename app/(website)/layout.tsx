@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Montserrat, Playfair_Display } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 
 const playfairDisplay = Playfair_Display({
   subsets: ["latin"],
@@ -20,19 +20,23 @@ export const metadata: Metadata = {
     "PVC WAKA is a platform dedicated to empowering Nigerian voters by providing easy access to information about Permanent Voter's Card (PVC) registration and collection. Our mission is to strengthen democracy by ensuring that every eligible voter can easily check their PVC status, find INEC centers, and track their registration progress online. Join us in our movement for electoral reform and make your voice heard.",
 };
 
+import Footer from "@/components/footer/footer";
+import Navbar from "@/components/navbar/navbar";
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${playfairDisplay.variable} ${montserrat.variable} h-full antialiased`}
-    >
-      <body className="">
+    <div className="min-h-screen">
+      <div className="hero-grid"></div>
+      <div className="hero-bg"></div>
+      <div className="">
+        <Navbar />
         {children}
-      </body>
-    </html>
+        <Footer />
+      </div>
+    </div>
   );
 }
