@@ -1,17 +1,39 @@
 import Logo from "../ui/Logo";
-import { UserCircle, Bell, Search } from "lucide-react";
 
-export default function AdminDashboard({
+import Modal from "../ui/modal";
+import { UserCircle, Bell, Search } from "lucide-react";
+import { useState, useEffect } from "react";
+
+export default function UserDashboard({
   children,
+  showModal = true,
+  modalTitle = "Verify Your Information",
+  modalContent = "Please complete your profile setup before continuing.",
+  onModalClose,
 }: {
   children: React.ReactNode;
+  showModal?: boolean;
+  modalTitle?: string;
+  modalContent?: React.ReactNode;
+  onModalClose?: () => void;
 }) {
+  const [isModalOpen, setIsModalOpen] = useState(showModal);
+
+  useEffect(() => {
+    setIsModalOpen(showModal);
+  }, [showModal]);
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    onModalClose?.();
+  };
+
   return (
-    <div className="flex min-h-screen bg-[#0a1208] text-white font-sans">
+    <div className="flex min-h-screen bg-white text-white font-sans">
       {/* Sidebar */}
-      <aside className="w-64 bg-primary border-r border-green-900/30 hidden md:flex flex-col">
+      <aside className="w-64 bg-[#10200e] border-r border-green-900/30 hidden md:flex flex-col">
         <div className="h-16 flex items-center px-6 border-b border-green-900/30">
-          <div className="sm:mx-auto w-fit ">
+          <div className="sm:mx-auto w-fit">
             <Logo />
           </div>
         </div>
@@ -20,8 +42,9 @@ export default function AdminDashboard({
             Menu
           </div>
         </div>
+
         <div className="p-4 border-t border-green-900/30 text-xs text-green-600/60 flex items-center justify-between">
-          <span>Admin Portal</span>
+          <span>User Portal</span>
           <span>v1.0</span>
         </div>
       </aside>
@@ -29,7 +52,7 @@ export default function AdminDashboard({
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         {/* Header */}
-        <header className="h-16 flex items-center justify-between px-8 border-b border-green-900/30 bg-primary/50 backdrop-blur-sm sticky top-0 z-10">
+        <header className="h-16 flex items-center justify-between px-8 border-b border-green-900/30 bg-[#10200e]/50 backdrop-blur-sm sticky top-0 z-10">
           <div className="flex items-center text-green-100/50">
             {/* Future Breadcrumbs or Search */}
             <div className="relative hidden md:block">
@@ -37,7 +60,7 @@ export default function AdminDashboard({
               <input
                 type="text"
                 placeholder="Search..."
-                className="bg-card border border-green-900/50 rounded-full pl-10 pr-4 py-1.5 text-sm focus:outline-none focus:border-green-500/50 text-green-100 placeholder:text-green-100/30 w-64 transition-all"
+                className="bg-[#152b12] border border-green-900/50 rounded-full pl-10 pr-4 py-1.5 text-sm focus:outline-none focus:border-green-500/50 text-green-100 placeholder:text-green-100/30 w-64 transition-all"
               />
             </div>
           </div>
@@ -51,11 +74,9 @@ export default function AdminDashboard({
               <UserCircle className="w-7 h-7 text-green-400" />
               <div className="flex flex-col items-start text-left">
                 <span className="text-sm font-medium leading-none">
-                  Admin User
+                  Normal User
                 </span>
-                <span className="text-[10px] text-green-100/40 mt-1">
-                  Superadmin
-                </span>
+                <span className="text-[10px] text-green-100/40 mt-1">User</span>
               </div>
             </button>
           </div>
@@ -66,6 +87,16 @@ export default function AdminDashboard({
           <div className="max-w-6xl mx-auto">{children}</div>
         </main>
       </div>
+
+      {/* Modal Overlay - Outside overflow container */}
+      <Modal
+        isOpen={isModalOpen}
+        title={modalTitle}
+        onClose={handleCloseModal}
+        closeButton={false}
+      >
+        {modalContent}
+      </Modal>
     </div>
   );
 }
