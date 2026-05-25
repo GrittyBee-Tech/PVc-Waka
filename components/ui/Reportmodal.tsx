@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import { X } from "lucide-react";
 
-interface ModalProps {
+interface ReportModalProps {
   isOpen: boolean;
   position?: "fixed" | "absolute";
   title?: string;
@@ -14,7 +14,7 @@ interface ModalProps {
   bg?: string;
 }
 
-export default function Modal({
+export default function ReportModal({
   isOpen,
   position = "fixed",
   title,
@@ -25,18 +25,11 @@ export default function Modal({
   className = "",
   size = "md",
   bg = "bg-white",
-}: ModalProps) {
+}: ReportModalProps) {
   if (!isOpen) return null;
 
   const wrapperClass =
     position === "absolute" ? "absolute inset-0" : "fixed inset-0";
-
-  const sizeClasses = {
-    sm: "w-[300px] max-w-sm",
-    md: "w-[500px] max-w-md",
-    lg: "w-[700px] max-w-lg",
-    xl: "w-[900px] max-w-xl",
-  };
 
   return (
     <div className={`${wrapperClass} z-50`}>
@@ -47,12 +40,12 @@ export default function Modal({
       />
 
       {/* Modal Content */}
-      <div className="absolute inset-0 flex items-center justify-center p-4">
+      <div className="absolute inset-0 flex justify-center overflow-y-auto md:p-16 ">
         <div
           className={`
             ${bg}
-            ${sizeClasses[size]}
-            w-full
+     
+            w-9/12
             border border-green-900/30
             rounded-lg
             shadow-2xl
