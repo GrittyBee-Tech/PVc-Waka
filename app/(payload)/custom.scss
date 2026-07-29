@@ -1,0 +1,14 @@
+/* app/(payload)/admin/custom.scss */
+
+/* Override Payload CSS variables */
+:root {
+//   --theme-bg: #0f172a;               /* Darker background */
+//   --theme-elevation-100: #1e293b;    /* Card background */
+  --theme-success-500: #10b981;      /* Custom primary/accent */
+  --font-body: 'Inter', sans-serif;
+}
+
+/* Hide specific elements if needed */
+.payload-default-logo {
+//   filter: hue-rotate(180deg);
+}
