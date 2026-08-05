@@ -5,6 +5,7 @@ import { getPayload } from "payload";
 import config from "@payload-config";
 import { RichText } from "@payloadcms/richtext-lexical/react";
 import { LikeButton } from "@/components/ui/LikeButton";
+import { CommentForm } from "@/components/ui/comment-form";
 
 type Args = {
   params: Promise<{ slug: string }>;
@@ -24,12 +25,20 @@ export default async function BlogPostPage({ params }: Args) {
   });
 
   const post = docs[0];
-  console.log(post.content);
 
   // 2. Return 404 if post doesn't exist
   if (!post) {
     notFound();
   }
+
+  const { docs: comments } = await payload.find({
+    collection: "comments",
+    where: {
+      post: { equals: post.id },
+      status: { equals: "approved" },
+    },
+    sort: "-createdAt", // Newest first
+  });
 
   const image =
     typeof post.featuredImage === "object" ? post.featuredImage : null;
@@ -67,6 +76,26 @@ export default async function BlogPostPage({ params }: Args) {
       <div className="mt-8 pt-4 border-t flex items-center justify-between">
         <LikeButton postId={String(post.id)} initialLikes={post.likes || 0} />
       </div>
+
+      <div className="space-y-4 my-8">
+        <h3 className="text-2xl font-bold">Comments</h3>
+        {comments.map((comment) => (
+          <div key={comment.id} className="border p-4 rounded bg-gray-50">
+            <div className="flex justify-between items-center mb-2">
+              <span className="font-semibold">{comment.authorName}</span>
+              <span className="text-xs text-gray-500">
+                {new Date(comment.createdAt).toLocaleDateString()}
+              </span>
+            </div>
+            <p className="text-gray-700 whitespace-pre-wrap">
+              {comment.content}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      {/* Form */}
+      <CommentForm postId={String(post.id)} />
     </article>
   );
 }
