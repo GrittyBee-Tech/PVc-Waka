@@ -70,6 +70,8 @@ export default function UserLayout({
     router.push(`/dashboard/user/verify-nin`);
   };
 
+  if (user?.role === "admin") return router.push("/dashboard/admin");
+
   return (
     <>
       <DashboardLayout links={links} role="User">
