@@ -50,6 +50,7 @@ const InputGroup = <T extends string>({
           value={inputValue}
           placeholder={placeholder}
           maxLength={maxLength}
+          required={required}
           onChange={(e) => {
             if (!prefix) {
               onChange(name, e.target.value);
